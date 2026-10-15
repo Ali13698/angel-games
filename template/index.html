@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Angel Game</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#fff;min-height:100vh;padding:12px;display:flex;flex-direction:column;gap:10px;align-items:center}
+h1{font-size:20px}
+button{padding:14px;font-size:16px;font-weight:700;border:0;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;width:100%;max-width:400px;cursor:pointer}
+button:disabled{opacity:.4}
+#game{width:90vw;max-width:400px;aspect-ratio:1;background:#1a1f3a;border-radius:12px;display:flex;align-items:center;justify-content:center}
+#log{font-size:11px;background:#1a1f3a;padding:8px;border-radius:8px;overflow:auto;max-height:140px;width:100%;max-width:400px;direction:ltr;text-align:left}
+</style>
+</head>
+<body>
+<h1>Angel Game</h1>
+<button id="start">شروع بازی</button>
+<div id="game">آماده</div>
+<pre id="log"></pre>
+<script type="module" src="./src/main.ts"></script>
+</body>
+</html>
