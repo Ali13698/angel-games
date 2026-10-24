@@ -1,0 +1,40 @@
+name: Build WASM Games
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.27'
+
+      - name: Build All WASM Games
+        run: |
+          for dir in ludo tic-tac-toe; do
+            if [ -d "$dir" ]; then
+              echo "Building $dir..."
+              cd "$dir"
+              # اگر go.mod نبود، خودکار بساز
+              if [ ! -f "go.mod" ]; then
+                go mod init "angel-games/$dir"
+              fi
+              GOOS=wasip1 GOARCH=wasm go build -o game.wasm .
+              cd ..
+            fi
+          done
+          
+      - name: Commit and Push WASM
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-build WASM Games [skip ci]"
+          file_pattern: "*/game.wasm"
