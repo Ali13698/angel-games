@@ -1,0 +1,53 @@
+name: Build Unity WebGL and Push to Go
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-unity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Games Repo
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Cache Unity Library
+        uses: actions/cache@v3
+        with:
+          path: unity-ludo/Library
+          key: Library-WebGL
+
+      - name: Build Unity WebGL
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          unityVersion: auto
+          projectPath: unity-ludo # مسیر پروژه Unity داخل این مخزن
+
+      - name: Checkout Go Repo
+        uses: actions/checkout@v4
+        with:
+          repository: Ali13698/angel-go
+          token: ${{ secrets.GH_PAT }} # نیاز به یک Personal Access Token
+          path: angel-go
+
+      - name: Copy Unity Build to Go Static
+        run: |
+          mkdir -p angel-go/internal/web/static/unity
+          cp -r build/WebGL/* angel-go/internal/web/static/unity/
+          
+      - name: Commit and Push to Go Repo
+        run: |
+          cd angel-go
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add internal/web/static/unity/
+          git commit -m "Auto-build Unity WebGL [skip ci]" || echo "No changes to commit"
+          git push
