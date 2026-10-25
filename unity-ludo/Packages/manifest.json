@@ -1,0 +1,14 @@
+{
+  "scopedRegistries": [
+    {
+      "name": "UnityNuGet",
+      "url": "https://unitynuget-registry.openupm.com",
+      "scopes": ["org.nuget"]
+    }
+  ],
+  "dependencies": {
+    "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#ea014c9ae534d56111962d96f89f8a046e302dc9",
+    "org.nuget.google.protobuf": "3.36.2",
+    "com.unity.modules.imgui": "1.0.0"
+  }
+}
