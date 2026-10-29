@@ -1,0 +1,17 @@
+{
+  "name": "@angel/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "wire.ts",
+  "types": "wire.ts",
+  "dependencies": {
+    "protobufjs": "7.5.4"
+  },
+  "exports": {
+    ".": "./wire.ts",
+    "./wire": "./wire.ts",
+    "./rest": "./rest.ts",
+    "./models": "./models.ts"
+  }
+}
