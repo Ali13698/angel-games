@@ -1,0 +1,250 @@
+:root {
+  color-scheme: dark;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #0b1423;
+  color: #e9f1fc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top, #1a3049, #0b1423 65%);
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; color: inherit; }
+button:disabled { cursor: default; opacity: .45; }
+
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #f5c65b;
+  outline-offset: 3px;
+}
+
+.shell {
+  max-width: 580px;
+  margin: auto;
+  padding: 22px 16px;
+}
+
+header, .brand, .room-line, .dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand { justify-content: flex-start; }
+.brand-mark { color: #f5c65b; font-size: 40px; }
+
+h1 { margin: 0; font-size: 23px; }
+h2 { margin: 4px 0; font-size: 20px; }
+
+.brand p {
+  color: #a8b9ce;
+  margin: 6px 0;
+  font-size: 12px;
+}
+
+.icon {
+  background: #203349;
+  border: 1px solid #42556d;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+}
+
+.room-line {
+  font-size: 11px;
+  color: #a8b9ce;
+  margin: 20px 0 14px;
+  flex-wrap: wrap;
+}
+
+.players {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.player {
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #293d53;
+  border-inline-start: 4px solid var(--player);
+  border-radius: 12px;
+  background: #142338;
+}
+
+.player.active {
+  border-color: var(--player);
+  background: #21364b;
+}
+
+.player strong {
+  color: var(--player);
+  font-size: 13px;
+}
+
+.player small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #a8b9ce;
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: #16273c;
+  padding: 16px;
+  border-radius: 18px;
+}
+
+.eyebrow {
+  color: #a8b9ce;
+  font-size: 11px;
+  margin: 0;
+}
+
+#hint {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #becde0;
+  margin: 6px 0 0;
+}
+
+.dice {
+  flex-shrink: 0;
+  width: 84px;
+  min-height: 88px;
+  border: 1px solid #f5c65b;
+  border-radius: 18px;
+  background: #f5c65b;
+  color: #172235;
+}
+
+.dice span {
+  display: block;
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+.dice small { font-size: 11px; }
+
+.status {
+  min-height: 36px;
+  color: #bdcde0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #a8b9ce;
+}
+
+footer button {
+  border: 0;
+  background: transparent;
+  color: #f5c65b;
+  padding: 10px 0;
+  text-decoration: underline;
+}
+
+.rules {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #a8b9ce;
+  line-height: 2;
+}
+
+summary { cursor: pointer; }
+
+dialog {
+  width: min(440px, calc(100% - 28px));
+  max-height: 85vh;
+  overflow: auto;
+  background: #142338;
+  color: #e9f1fc;
+  border: 1px solid #42556d;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+dialog::backdrop { background: #030a15cc; }
+
+label {
+  display: block;
+  margin: 14px 0;
+  font-size: 13px;
+}
+
+input:not([type=checkbox]) {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid #42556d;
+  border-radius: 10px;
+  background: #0b1728;
+  color: #e9f1fc;
+  padding: 12px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type=checkbox] {
+  width: 18px;
+  height: 18px;
+  accent-color: #41d6ae;
+}
+
+.notice, .muted {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #b7c8dc;
+}
+
+.notice {
+  border-inline-start: 3px solid #f5c65b;
+  padding-inline-start: 10px;
+}
+
+.primary {
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 12px;
+  color: #0b1423;
+  background: #41d6ae;
+  font-weight: bold;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #34485f;
+  margin: 20px 0;
+}
+
+@media (max-width: 360px) {
+  .shell { padding: 14px 8px; }
+  h2 { font-size: 17px; }
+  .controls { padding: 12px; }
+}
