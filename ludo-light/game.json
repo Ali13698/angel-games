@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "ludo-light",
+  "version": "0.1.0",
+  "abi": "angel-apply-v1",
+  "runtime": "wasi-reactor",
+  "source": ".",
+  "artifacts": {
+    "wasm": "dist/game.wasm",
+    "entry": "dist/index.html"
+  }
+}
