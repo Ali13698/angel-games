@@ -1,0 +1,56 @@
+name: Validate game catalog
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ludo-light/go.mod
+          cache: false
+
+      - name: Install shared tooling
+        run: npm install --ignore-scripts
+
+      - name: Generate Protobuf bindings
+        run: npm run protocol:generate
+
+      - name: Test catalog scanner
+        run: npm run test:catalog
+
+      - name: Discover game manifests
+        run: node scripts/catalog.mjs > catalog-source.json
+
+      - name: Bundle SDK
+        run: npx --yes esbuild@0.25.0 sdk/src/index.ts --bundle --format=esm --platform=browser --outfile=/tmp/angel-sdk.js
+
+      - name: Install Ludo tooling
+        working-directory: ludo-light
+        run: npm install --ignore-scripts
+
+      - name: Test Ludo rules
+        working-directory: ludo-light
+        run: go test ./...
+
+      - name: Build Ludo frontend and WASM
+        working-directory: ludo-light
+        run: npm run build:release
+
+      - name: Check Ludo distribution
+        working-directory: ludo-light
+        run: node scripts/check-dist.mjs
