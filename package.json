@@ -1,0 +1,14 @@
+{
+  "name": "angel-games",
+  "private": true,
+  "type": "module",
+  "workspaces": ["sdk", "protocol"],
+  "scripts": {
+    "protocol:generate": "node scripts/generate-protocol.mjs",
+    "catalog": "node scripts/catalog.mjs",
+    "test:catalog": "node --test scripts/catalog.test.mjs"
+  },
+  "devDependencies": {
+    "protobufjs-cli": "1.1.3"
+  }
+}
