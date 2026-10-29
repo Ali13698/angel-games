@@ -1,0 +1,50 @@
+name: Wire Contract Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wire-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install shared tooling
+        run: npm install --ignore-scripts
+
+      - name: Generate protocol bindings
+        run: npm run protocol:generate
+
+      - name: Bundle wire module for tests
+        run: >
+          npx --yes esbuild@0.25.0 protocol/wire.ts
+          --bundle
+          --platform=node
+          --format=esm
+          --outfile="${RUNNER_TEMP}/angel-wire.mjs"
+
+      - name: Test server wire compatibility
+        env:
+          WIRE_BUNDLE: ${{ runner.temp }}/angel-wire.mjs
+        run: node --test scripts/wire.test.mjs
+
+      - name: Bundle browser SDK
+        run: >
+          npx --yes esbuild@0.25.0 sdk/src/index.ts
+          --bundle
+          --platform=browser
+          --format=esm
+          --outfile="${RUNNER_TEMP}/angel-sdk.js"
