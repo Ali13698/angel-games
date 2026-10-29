@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package angel;
+
+option go_package = "github.com/angel/angel/internal/wire;wire";
+
+message ClientMsg {
+  string type = 1;
+  string id = 2;
+  string room_id = 3;
+  int64 rev = 4;
+  bytes payload = 5;
+}
+
+message ServerMsg {
+  string type = 1;
+  string room_id = 2;
+  string game_id = 3;
+  int64 rev = 4;
+  repeated GameEvent events = 5;
+  ErrorMsg error = 6;
+  bytes state = 7;
+  string from = 8;
+  bytes payload = 9;
+}
+
+message GameEvent {
+  string event_id = 1;
+  string stream_id = 2;
+  int64 seq = 3;
+  string type = 4;
+  bytes payload = 5;
+}
+
+message ErrorMsg {
+  string code = 1;
+  string error = 2;
+}
+
+message RolledPayload {
+  int32 seat = 1;
+  int32 dice = 2;
+}
+
+message MovedPayload {
+  int32 seat = 1;
+  int32 token = 2;
+  int32 pos = 3;
+}
+
+message TurnPayload {
+  int32 turn = 1;
+}
+
+message GameOverPayload {
+  int32 winner = 1;
+}
