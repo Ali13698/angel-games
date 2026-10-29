@@ -1,0 +1,19 @@
+{
+  "name": "angel-ludo-light",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "npm run check && node scripts/build.mjs",
+    "build:online": "npm run check && node scripts/build.mjs --online",
+    "build:wasm": "node scripts/build-wasm.mjs",
+    "build:release": "npm run build:online && npm run build:wasm",
+    "preview": "node scripts/serve.mjs",
+    "test:go": "go test ./..."
+  },
+  "devDependencies": {
+    "esbuild": "0.25.0",
+    "typescript": "5.8.3"
+  }
+}
