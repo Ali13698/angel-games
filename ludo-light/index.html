@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1423">
+  <title>منچ سبک | Angel</title>
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/board.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <div>
+          <h1>منچ آنجل</h1>
+          <p>یک تاس تا اتفاق بعدی</p>
+        </div>
+      </div>
+      <button id="settings" class="icon"
+        aria-label="تنظیمات و اتصال" aria-haspopup="dialog">⚙</button>
+    </header>
+
+    <div class="room-line">
+      <span id="badge">پیش‌نمایش • بدون اتصال</span>
+      <span>ANGEL / LUDO</span>
+    </div>
+
+    <section id="players" class="players" aria-label="بازیکنان"></section>
+
+    <section class="board-wrap">
+      <div id="board" class="board" role="group"></div>
+    </section>
+
+    <section class="controls" aria-label="کنترل نوبت">
+      <div>
+        <p class="eyebrow">نوبت بازی</p>
+        <h2 id="turn">منتظر اتصال</h2>
+        <p id="hint">برای بازی، به اتاق آنلاین متصل شوید.</p>
+      </div>
+      <button id="roll" class="dice" disabled aria-label="تاس بریز">
+        <span id="die">⚄</span>
+        <small>تاس بریز</small>
+      </button>
+    </section>
+
+    <p id="status" class="status" role="status" aria-live="polite">
+      این صفحه پیش‌نمایش است؛ اتصال واقعی هنوز تأیید نشده.
+    </p>
+
+    <footer>
+      <span>✦ خانه امن</span>
+      <span>۲ تا ۴ بازیکن · انفرادی / تیمی</span>
+      <button id="connect-open">اتصال به اتاق</button>
+    </footer>
+
+    <details class="rules">
+      <summary>قوانین این نسخه</summary>
+      <p>
+        خروج با ۶، ورود به مقصد با عدد دقیق، نوبت اضافه با ۶ یا زدن
+        یا رسیدن به مقصد. سومین ۶ پیاپی نوبت را می‌سوزاند.
+        خانه‌های ستاره‌دار امن‌اند؛ سد دو مهره‌ای نداریم.
+      </p>
+      <p>
+        در حالت تیمی، صندلی‌های روبه‌رو هم‌تیم‌اند و هر دو باید تمام
+        مهره‌ها را برسانند. حرکت مهره هم‌تیمی مجاز نیست.
+        تایمر اجباری و حریف کامپیوتری در این نسخه وجود ندارد.
+      </p>
+    </details>
+  </main>
+
+  <dialog id="dialog">
+    <form id="connection">
+      <div class="dialog-heading">
+        <h2>اتصال و تنظیمات</h2>
+        <button type="button" id="close" class="icon"
+          aria-label="بستن">×</button>
+      </div>
+
+      <p class="notice">
+        نسخه توسعه: اتصال به SDK محلی و استقرار پلاگین نیاز دارد.
+        این فرم اتاق یا هویت جدید نمی‌سازد.
+      </p>
+
+      <label>
+        آدرس WebSocket
+        <input id="endpoint" type="url" dir="ltr"
+          placeholder="wss://your-host/ws" required autocomplete="off">
+      </label>
+
+      <label>
+        شناسه اتاق
+        <input id="room" dir="ltr" required maxlength="200"
+          autocomplete="off">
+      </label>
+
+      <label>
+        شناسه نشست بازیکن
+        <input id="user" dir="ltr" required maxlength="200"
+          autocomplete="off">
+      </label>
+
+      <p class="muted">
+        شناسه به‌تنهایی احراز هویت نیست؛ نشست باید توسط میزبان و SDK تأیید شود.
+      </p>
+
+      <label class="check">
+        <input id="motion" type="checkbox">
+        کاهش حرکت‌ها
+      </label>
+
+      <button class="primary" type="submit">
+        اتصال / همگام‌سازی مجدد
+      </button>
+    </form>
+
+    <hr>
+
+    <label class="check">
+      <input id="teams" type="checkbox" disabled>
+      حالت تیمی ۲ در برابر ۲
+    </label>
+
+    <p class="muted">
+      فقط میزبانِ اتاق چهارنفره، پیش از اولین تاس،
+      می‌تواند حالت را تغییر دهد.
+    </p>
+  </dialog>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
