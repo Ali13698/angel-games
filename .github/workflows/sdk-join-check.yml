@@ -1,0 +1,53 @@
+name: SDK Join Checks
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'sdk/**'
+      - 'protocol/**'
+      - 'scripts/client.test.mjs'
+      - '.github/workflows/sdk-join-check.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sdk-join:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install shared tooling
+        run: npm install --ignore-scripts
+
+      - name: Generate protocol bindings
+        run: npm run protocol:generate
+
+      - name: Bundle client for tests
+        run: >
+          npx --yes esbuild@0.25.0 sdk/src/client.ts
+          --bundle --platform=node --format=esm
+          --outfile="${RUNNER_TEMP}/angel-client.mjs"
+
+      - name: Test confirmed membership and connection lifecycle
+        env:
+          CLIENT_BUNDLE: ${{ runner.temp }}/angel-client.mjs
+        run: node --test scripts/client.test.mjs
+
+      - name: Bundle browser SDK
+        run: >
+          npx --yes esbuild@0.25.0 sdk/src/index.ts
+          --bundle --platform=browser --format=esm
+          --outfile="${RUNNER_TEMP}/angel-sdk.js"
